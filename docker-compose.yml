@@ -18,7 +18,7 @@ services:
       - dbdata:/var/lib/postgresql/data
       - db_backup:/var/lib/postgresql/backup
     networks:
-      - shared_network
+      - task_network
 
   web-dev:
     container_name: backend_staging_test
@@ -42,10 +42,10 @@ services:
       - .env
     restart: always
     networks:
-      - shared_network
+      - task_network
 
 networks:
-  shared_network:
+  task_network:
     external: true
 
 volumes:
