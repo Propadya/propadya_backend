@@ -1,5 +1,5 @@
 services:
-  db-dev:
+  db-dev-test:
     image: postgres:17
     container_name: db_dev
     env_file:
@@ -15,8 +15,8 @@ services:
     command: -p 5441
     restart: always
     volumes:
-      - dbdata:/var/lib/postgresql/data
-      - db_backup:/var/lib/postgresql/backup
+      - dbdata_test:/var/lib/postgresql/data
+      - db_backup_test:/var/lib/postgresql/backup
     networks:
       - task_network
 
@@ -32,7 +32,7 @@ services:
       gunicorn config.wsgi:application --bind 0.0.0.0:${WEB_PORT}
       "
     depends_on:
-      - db-dev
+      - db-dev-test
     volumes:
       - .:/app/backend
       - ./django_warning.log:/app/django_warning.log
@@ -49,5 +49,5 @@ networks:
     external: true
 
 volumes:
-  dbdata:
-  db_backup:
+  dbdata_test:
+  db_backup_test:
