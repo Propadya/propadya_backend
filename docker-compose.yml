@@ -1,7 +1,7 @@
 services:
   db-dev-test:
     image: postgres:17
-    container_name: db_dev
+    container_name: db-dev-test
     env_file:
       - .env
     environment:
