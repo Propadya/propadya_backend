@@ -1,0 +1,53 @@
+services:
+  db-dev:
+    image: postgres:17
+    container_name: db_dev
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    expose:
+      - 5441
+    ports:
+      - 5441:5441 # Ensure you map the host port to the correct container port for PostgreSQL
+    command: -p 5441
+    restart: always
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - db_backup:/var/lib/postgresql/backup
+    networks:
+      - shared_network
+
+  web-dev:
+    container_name: backend_staging_test
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn config.wsgi:application --bind 0.0.0.0:${WEB_PORT}
+      "
+    depends_on:
+      - db-dev
+    volumes:
+      - .:/app/backend
+      - ./django_warning.log:/app/django_warning.log
+    ports:
+      - "${WEB_PORT}:${WEB_PORT}"
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
+
+volumes:
+  dbdata:
+  db_backup:
