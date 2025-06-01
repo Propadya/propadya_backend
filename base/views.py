@@ -90,14 +90,14 @@ class CustomViewSet(ModelViewSet):
         return self.apply_relational_optimizations(queryset)
 
     def apply_relational_optimizations(self, queryset):
-        info = CacheManager.get_cache("model_info", {}).get(self.model_class.__name__.lower(), {})
-        if not info:
-            info = CacheManager.update_model_info_in_cache(self.model_class)
+        # info = CacheManager.get_cache("model_info", {}).get(self.model_class.__name__.lower(), {})
+        # if not info:
+        #     info = CacheManager.update_model_info_in_cache(self.model_class)
 
-        if info.get("select_related"):
-            queryset = queryset.select_related(*info["select_related"])
-        if info.get("prefetch_related"):
-            queryset = queryset.prefetch_related(*info["prefetch_related"])
+        # if info.get("select_related"):
+        #     queryset = queryset.select_related(*info["select_related"])
+        # if info.get("prefetch_related"):
+        #     queryset = queryset.prefetch_related(*info["prefetch_related"])
         return queryset
 
     # def clear_cache(self):

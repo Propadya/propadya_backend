@@ -147,21 +147,21 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     "DEFAULT_PAGINATION_CLASS": "base.pagination.CustomPagination",
     "PAGE_SIZE": 10,
-    # "EXCEPTION_HANDLER": "utils.custom_exception_handler.custom_exception_handler",
+    "EXCEPTION_HANDLER": "utils.custom_exception_handler.custom_exception_handler",
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ),
     "COERCE_DECIMAL_TO_STRING": False,
-    "DEFAULT_THROTTLE_CLASSES": [
-            "rest_framework.throttling.AnonRateThrottle",
-            "rest_framework.throttling.UserRateThrottle",
-        ],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "5/minute",
-        "user": "10/minute",
-    }
+    # "DEFAULT_THROTTLE_CLASSES": [
+    #         "rest_framework.throttling.AnonRateThrottle",
+    #         "rest_framework.throttling.UserRateThrottle",
+    #     ],
+    # "DEFAULT_THROTTLE_RATES": {
+    #     "anon": "5/minute",
+    #     "user": "10/minute",
+    # }
 }
 
 SIMPLE_JWT = {
@@ -249,9 +249,9 @@ SPECTACULAR_SETTINGS = {
             "bearerFormat": "JWT",
         }
     },
-    "AUTHENTICATION_CLASSES": [
-        "base.authentication.CustomJWTAuthenticationScheme",
-    ],
+    # "AUTHENTICATION_CLASSES": [
+    #     "base.authentication.CustomJWTAuthenticationScheme",
+    # ],
     "SECURITY": [{"BearerAuth": []}],
 
 }
